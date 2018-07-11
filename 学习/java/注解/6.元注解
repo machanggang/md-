@@ -1,0 +1,13 @@
+用于给注解进行注解。一般自定义注解的时候需要用到。
+1.@Target({ElementType.METHOD,Element.TYPE})
+作用域:CONSTRUCTOR构造方法声明，FIELD字段声明，LOCAL_VARIABLE,局部变量声明，METHOD方法声明，PACKAGE包声明PARAMETER参数声明,TYPE类和接口声明
+2.@Retention(RetentionPolicy.RUNTIME)
+生命周期:
+SOURCE只在源码中显示，编译时丢弃
+CLASS编译时记录在class文件中，运行时忽略
+RUNTIME运行时存在，可以通过反射读取
+3.@Inherited
+允许子类继承。就是父类中定义有注解的时候，它的子类可以继承该注解。对接口无效。而且，只能继承标注在类上面的方法，标注在方法和成员变量上的方法是不能继承的。
+标识注解，没有成员变量。
+4.@Documented
+生产javadoc时会包含注解

@@ -1,0 +1,11 @@
+Spring中
+@Autowired
+作用:自动注入。
+@Service
+
+@Repository
+
+Mybitis
+@InsertProvide
+@UpdateProvide
+@Option
