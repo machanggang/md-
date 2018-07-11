@@ -1,0 +1,3 @@
+1. JDBC提供了Statement、PreparedStatement和CallableStatement三个接口来执行查询语句，其中Statement用于通用查询，PreparedStatement用于执行参数化查询，而CallableStatement则是用于存储过程。
+
+2. 

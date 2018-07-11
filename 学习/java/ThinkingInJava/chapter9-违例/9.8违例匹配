@@ -1,0 +1,6 @@
+使用try catch块时，catch的匹配规则：
+1. 按照catch定义的顺序先后来匹配
+
+2. 抛出的异常是A，catch的异常是B（A extends B），B可以匹配到A
+
+3. 若先catch B，再catch A（A extends B），则编译会报错，因为永远也进不到catch A里

@@ -1,0 +1,4 @@
+
+1. Throwable是错误和异常的超类，只有当对象是此类（或其子类之一）的实例时，才能通过java虚拟机或throw语句抛出；类似地，只有此类或其子类之一才可以是cause子句中的参数类型。
+
+2. Throwable的直接子类是Error和Exception.
