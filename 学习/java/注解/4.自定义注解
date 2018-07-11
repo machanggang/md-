@@ -1,0 +1,23 @@
+一、自定义注解的语法要求
+1.用@interface定义注解。
+2.定义成员
+
+定义成员以无参无异常方式声明，并且可以有初始值。成员的类型是有限制的，除了基本数据类型，和String, Class, Annotation, Enumeration，不包括其他的数据类型了。
+如果成员只有一个的时候，就必须取名为value(),(它的类型还是得声明)。在使用时，忽略成员名和=号，直接使用。注解可以没有成员，这样的注解称为标识注解。
+例:
+public @interface Description{
+String desc();
+String author();
+//在注解里，这是成员变量，不是方法
+int age() default 18;
+}
+
+二、使用自定义注解
+@AnnotationName(成员名=值，...)
+例
+@Description(desc="I'am eyeColor",author="mooc",age=18)
+public String eyeColor(){
+return "red"
+}
+
+自定义的注解用中定义了作用范围是方法，类或接口，所以这里Description用在了eyeColor方法上。

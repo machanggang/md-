@@ -1,0 +1,41 @@
+
+一、概念
+通过反射获取类、成员或方法上的运行时注解信息，从而实现动态控制程序运行逻辑。
+二、步奏
+1.利用反射，获取到Class类类型对象。
+
+Class c = Class.forName("com.xxx.yyy.className");
+2.找到需要解析的类、成员或方法上的注解
+
+找类上的注解，直接下面黄色部分标识代码即可；
+//判断是否包含注解AnnotationName
+boolean isExist = c.isAnnotationPresent(AnnotationName.class);
+if(isExist){
+//第3步内容
+}
+
+3.拿到注解实例
+
+AnnotationName an = (AnnotationName)c.getAnnotation(AnnotationName.class);
+4.使用注解内容
+
+an.value();
+5.对于方法上的注解，可以这样解析
+
+Class c = Class.forName("com.xxx.yyy.className");
+找方法上的，先获取所有的方法，再进行第三步
+Method[] ms = c.getMethods();
+for(Method m : ms){
+//黄色部分代码
+}
+，也可以这样拿，把绿色部分改为以下代码
+for(Method m : ms){
+//先把方法上的注解都拿到，然后再使用
+Annotation[] as = c.getAnnotations();
+for(Annotation a : as){
+.//如果包含有需要使用的AnnotationName注解，再使用
+if(a.instanceof AnnotationName){
+//第四步
+}
+}
+}
