@@ -1,0 +1,201 @@
+1.TOP子句
+    a.语法
+        SELECT TOP number|percent column_name(s) FROM table_name WHERE condition
+        TOP number|percent:前number条或百分之number记录，带PERCENT的表示百分数。
+        column_name(s):要选择的列。
+        table_name:表名。
+    b.作用
+        规定要返回的记录数目。
+    c.注
+        在oracle中，用WHERE ROWNUM <= number。
+    d.例子
+        SELECT TOP 2 * FROM PERSONS 选择PERSONS表中前两条记录。
+2.LIKE操作符
+    a.语法
+        WHERE column LIKE pattern
+        WHERE column NOT LIKE pattern
+    b.作用
+        用于在WHERE字句中搜索列中的指定模式。
+    c.通配符
+        "_":与任意一个字符匹配
+        "%":与包含一个或多个字符匹配
+        "[]":与特定范围中的任意单字符匹配，如[abcd]
+        "[-]":与特定范围集中的任意单字符匹配，如[a-z]
+        "[^]"/"[^-]"（也可以用!代替^）:与特定范围或范围集之外的任意单字符匹配，如[^0-9],[^asdf]
+    d.例子
+        WHERE LastName LIKE 'm[^c]%' 可以找到以 m 开始的、后面的（第二个）字母不为 c 的所有姓。
+3.IN操作符
+    a.语法
+        WHERE column_name IN (value1,value2,...)
+        column_name的值为value1,value2,...中的一个
+    b.作用
+        IN操作法允许我们在WHERE子句中规定多个值
+    c.例子
+        SELECT * FROM PERSONS WHERE LastName IN ('A','B')
+4.BETWEEN操作符
+    a.语法
+        WHERE column_name BETWEEN value1 AND value2
+    b.作用
+        选取介于两个值之间的数据范围，值可以是数值、文本或者日期。
+    c.注
+        是否包含value1和value2是根据数据库来决定的，在oracle中，包含这两个值。
+        当value1>value2时，不会报错，但也选取不到数据。
+5.Alias（别名）
+    a.语法
+        表的SQL Alias语法：SELECT column_name(s) FROM table_name AS alias_name WHERE condition
+        列的SQL Alias语法：SELECT column_name AS alias_name FROM table_name WHERE condition
+    b.作用
+        通过SQL为列名称和表名称指定别名。
+▼6.JOIN（把表连接起来）
+    a.语法
+        SELECT * FROM table_name1
+        INNER/LEFT/RIGHT/FULL JOIN table_name2
+        ON table_name1.column_name = table_name2.column_name
+        WHERE condition
+        INNER JOIN:
+        在表中至少有一个table_name1.column_name = table_name2.column_name匹配时，INNER JOIN关键字返回行。
+        LEFT JOIN:
+        会返回table_name1中的所有行，即使在table_name2中没有匹配
+        RIGHT JOIN:
+        会返回table_name2中的所有行，即使在table_name1中没有匹配
+        FULL JOIN:
+        不管是否匹配，返回table_name1和table_name2中的所有行。
+        没有写连接方式时（即只有JOIN ON），默认是INNER JOIN
+    b.作用
+        用于根据两个表或多个表中的列之间的关系，从这些表中查询数据。
+7.UNION操作符
+    a.语法
+        SELECT column_name(s) FROM table_name1
+        UNION (ALL) SELECT column_name(s) FROM table_name2
+    b.作用
+        用于合并两个或多个SELECT语句的结果集。
+    c.注
+        SELECT语句中的列的数量必须相同，并且拥有相似的数据类型，列的顺序也必须相同。
+        UNION默认选取不同的值，如果允许重复的值，使用UNION ALL。
+        UNION ALL会列出所有的值。
+        结果集的列名总是等于第一个SELECT语句中的列名。
+8.SELECT INTO
+    a.语法
+        SELECT column_name(s) INTO new_table_name (IN externaldatabase.new_table_name)
+        FROM old_table_name
+        WHERE condition
+    b.作用
+        从一个表中选取数据，把数据插入另一个表中。通常用于创建表的备份复件或用于对记录进行存档。
+    c.例子
+        SELECT Persons.LastName,Orders.OrderNo INTO Persons_Order_Backup
+        FROM Persons
+        INNER JOIN Orders
+        ON Persons.Id_P=Orders.Id_P
+
+9.CREATE DATABASE
+    a.语法
+        CREATE DATABASE database_name
+    b.作用
+        用于创建数据库。
+10.CREATE TABLE
+    a.语法
+        CREATE TABLE table_name
+        (
+            column_name1 data_type1,
+            column_name2 data_type2,
+            ...
+         )
+    b.作用
+        用于创建数据库中的表。
+    c.data_type
+data_type	description
+integer(size)
+int(size)
+smallint(size)
+tinyint(size)	仅容纳整数，括号内规定数字的最大位数。
+decimal(size,d)
+numeric(size,d)	容纳带小数的数字，
+size为数字的最大位数，d规定小数点右侧的最大位数。
+char(size)	容纳固定长度字符串，size规定字符串的长度。
+varchar(size)	容纳可变长度的字符串，size为最大长度。
+date(yyyymmdd)	容纳日期。
+11.Constraints(约束)
+    a.语法
+         CREATE TABLE table_name
+        (
+            column_name1 data_type1 NOT NULL PRIMARY KEY,
+            column_name2 int UNIQUE CHECK(column_name2>0),
+            column_name3 data_type3 FOREIGN KEY REFERENCES Other_table(Id_other_table),//注：Id_other_table为主键才可以
+            column_name4 varchar(255) DEFAULT 'hello',
+            column_name5 data_type5 UNIQUE,
+            ...
+            CONSTRAINTS
+         )
+
+    b.作用
+        创建表时规定的约束（CREATE TABLE），创建后也可以约束（ALTER TABLE）。
+    c.约束类型
+        NOT NULL（非空）:
+            强制列不接受空值。如果不向受到改约束的字段添加值，则无法插入或者更新记录。
+        UNIQUE（唯一）:
+            约束唯一标识数据库表中的每条记录。可以有多个。
+        PRIMARY KEY（主键）:
+            约束唯一标识数据库表中的每条记录，主键必须包含唯一的非空值。每个表都应该有一个主键，并且每个表只
+能有一个主键。
+        FOREIGN KEY（外键）:
+            一个表的外键指向另一个表中的主键。
+        CHECK:
+            用于限制列中的值的范围。
+        DEFAULT（默认值）:
+            向列中插入默认值。
+
+12.CTEATE INDEX
+    a.语法
+        CREATE INDEX index_name
+        ON table_name(column_name(s))
+        CREATE UNIQUE INDEX index_name
+        ON table_name(column_name(s))
+    b.作用
+        在表中创建索引，以便更加快速高效地查询数据。
+13.DROP
+    a.语法
+        删除表：DROP TABLE table_name
+        删除数据库：DROP DATABASE database_name
+        删除索引（oracle）：DROP INDEX index_name
+        删除表的数据但不删除表：TRUNCATE TABLE table_name
+    b.作用
+        删除索引、表及数据库。
+14.ALTER TABLE
+    a.语法
+        添加列：ALTER TABLE table_name ADD column_name data_type
+        删除列：ALTER TABLE table_name DROP COLUMN column_name
+        改变列的数据类型：ALTER TABLE table_name ALTER column_name data_type
+    b.作用
+        用于在已有的表中添加、修改或删除列。
+15.AUTO INCREMENT字段
+    a.语法（ORACLE）
+      先通过sequence对创建auto-increment字段
+        CREATE SEQUENCE seq_name
+        MINVALUE 1
+        START WITH 1
+        INCREMENT BY 1
+        CACHE 10
+ 上面的代码创建名为 seq_person 的序列对象，它以 1 起始且以 1 递增。该对象缓存 10 个值以提高性能。CACHE 选项  规定了为了提高访问速度要存储多少个序列值。
+  在插入时调用nextval函数：
+          INSERT INTO Persons(P_Id,FirstName,LastName)
+            VALUES(seq_name.nextval,'xxx','yyy')
+    b.作用
+        在新纪录插入表中时生成一个唯一的数字。
+16.NULL值
+    a.语法
+        WHERE column_name IS (NOT) NULL
+    b.作用
+    NULL值是遗漏的未知数据。
+    不能用运算符来比较NULL值，只能用IS NULL和IS NOT NULL操作符。
+    c.注
+    若某个列包含有NULL值参加计算，则对包含NULL值的记录的计算结果为NULL；
+    解决（oracle）：NVL(column_name,0)
+    把NULL值变为0，方便计算。
+
+17.授权GRANT
+    a.语法
+        GRANT SELECT[INSERT/UPDATE/DELETE/EXECUTE...] ON TABLE_NAME(VIEW/PROCEDURE/...) TO USER
+    b.作用
+    把表TABLE_NAME（视图，存储过程等等）的SELECT（或者INSERT等）权限赋给用户USER。
+    c.注
+    一个授权语句可以同时把多种权限赋给用户。

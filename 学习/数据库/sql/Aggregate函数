@@ -1,0 +1,27 @@
+1.AVG函数
+    作用：返回数值列的平均值。NULL值不包括在计算中。
+    语法：SELECT AVG(col) FROM table WHERE condition
+2.COUNT函数
+    作用：返回匹配指定条件的行数。
+    语法：SELECT COUNT(col) FROM table WHERE condition    返回指定列的值的数目（NULL值不计入）；
+          SELECT COUNT(*) FROM TABLE WHERE condition    返回表中记录数；
+          SELECT COUNT(DISTINCT col) FROM table WHERE condition    返回指定列不同值的数目。
+3.FIRST函数
+    作用：返回指定字段中的第一个记录的值。（可以先用ORDER BY 对字段进行排序）
+    语法：SELECT FIRST(col) FROM table WHERE condition [ORDER BY col]
+4.LAST函数
+    作用：返回指定的字段中最后一个记录的值。
+    语法：SELECT LAST(col) FROM table WHERE condition [ORDER BY col]
+5.MAX函数
+    作用：返回指定字段中的最大值。（NULL值不包括在计算中）
+    语法：SELECT MAX(col) FROM table WHERE condition
+6.MIN函数
+    作用：返回指定字段中的最小值。（NULL值不包括在计算中）
+    语法：SELECT MIN(col) FROM table WHERE condition
+7.SUM函数
+    作用：返回指定数值列的总和。
+    语法：SELECT SUM(col) FROM table WHERE condition
+8.HAVING 子句
+    作用：和where子句类似，但是where子句无法和聚合函数一起使用。
+    语法：SELECT col(s) FROM table WHERE condition GROUP BY col HAVING function(col)
+    注：一定要记得group by的规则，select的字段一定被包含在group by中或聚合函数中。

@@ -1,0 +1,24 @@
+1.UCASE函数
+    作用：把字段的值转换为大写（只有有小写字母就把它变为大写的）。
+    语法：SELECT UCASE(col) FROM table
+2.LCASE函数
+    作用：把字段的值转换为小写。
+    语法：SELECT LCASE(col) FROM table
+3.MID函数
+    作用：从文本字段中提取字符。
+    语法：SELECT MID(col, star[, length]) FROM table
+    star为开始位置（1为开始），length为提取的长度（不写时表示提取star至末尾的字符串）。
+4.LEN函数
+    作用：返回文本字段中值的长度。
+    语法：SELECT LEN(col) FROM table
+5.ROUND函数
+    作用：把数值字段舍入为指定的小数位数。
+    语法：SELECT ROUND(col, decimals) FROM table
+    decimals为小数位数。
+6.NOW函数
+    作用：返回当前的日期和时间（数据库的时间，并非计算机的时间，当数据库安装在当前计算机时两者才一致）。
+    语法：SELECT NOW FROM table
+    在oracle中用关键字sysdate替代这个函数。
+7.FORMAT函数
+    作用：对字段的显示进行格式化。
+    语法：SELECT FORMAT(col, format) FROM table

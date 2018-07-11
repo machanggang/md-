@@ -1,0 +1,12 @@
+1.具体用法
+    a.先自定义一个类（实现XxxListener接口），用来处理监听到的事件。
+    b.实现接口中定义的方法。当监听到符合这些方法的事件发生时，会自动调用它们并把事件当参数传进去，从而对事件进行处理。
+    c.在web.xml中配置监听
+        <listener>
+            <listener-class>
+                xxx.yyy.ZzzListener//自定义的监听类
+            <listener-class>
+        </listener>
+2.实例：在线人数统计
+    思路：统计当前在线人数，相当于统计当前的session会话对象的个数，在容器创建时加入一个集合，用于存储session对象
+    每当session创建时，添加至集合中，销毁时，从集合中移除

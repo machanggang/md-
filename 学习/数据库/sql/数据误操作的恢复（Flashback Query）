@@ -1,0 +1,10 @@
+对数据进行delete和update操作，但是操作失误（如没有加where条件，对整个表进行了操作），而且已经commit了，需要恢复为以前的数据。
+这时就需要使用神器：Flashback Query
+条件：数据库必须处于Automatic Undo Management 状态。
+1.要恢复数据，需要查询某个时间以前的数据
+    语句：AS OF TIMESTAMP(SYSTIMESTAMP - INTERVAL '1' DAY)
+        表示1天以前的数据；把“'1' DAY”改为“'1' HOUR”表示1小时以前，同理还有MINUTE。
+        或者AS OF TIMESTAMP SYSDATE - 分钟/1440
+        1440 = 60分*24小时
+    把该语句加在FROM子句后面。
+    

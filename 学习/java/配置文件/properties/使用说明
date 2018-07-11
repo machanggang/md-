@@ -1,0 +1,77 @@
+1.好处
+    程序参数都写在配置文件里，在不修改程序的前提下，可以对程序随意修改参数。
+2.写配置文件
+    创建.properties文件（可以把.txt改为.properties），里面内容为一些键值对，如下
+# dest connection info
+conn.dest.url jdbc:oracle:thin:@127.0.0.1:2000:orcl
+conn.dest.driver oracle.jdbc.driver.OracleDriver
+conn.dest.username etps
+conn.dest.password etps
+
+    其中，"#"表示注释，然后每一行都是一个 key  value 形式的键值对。
+    为了方便后面使用，不妨创建a.properties放在src根目录下。
+3.把配置文件的内容加载到程序内存中
+    自定义一个java类，用于读取配置文件，XXX.java（package com.b）
+    （1）把配置文件用输入流读入内存
+InputStream is = null;
+is = XXX.class.getResourceAsStream("/a.properties");// 注：XXX是当前的类名；第一个"/"代表工程的根目录
+// 或者
+FileInputStream fIS= null;
+fIS= new FileInputStream("/packege/filename");// 此时路径为相对系统路径
+    （2）用Properties对象处理输入流
+Properties props = new Properties();
+props.load(is);
+    （3）把处理后的数据写入内存中
+// 用Map存储读取到的键值对
+private Map<String, String> config = new HashMap<String, String>();
+Enumeration<?> propKeys = props.propertyNames();
+    while (propKeys.hasMoreElements()) {
+        String propName = (String) propKeys.nextElement();
+        String propValue = props.getProperty(propName);
+        this.config.put(propName, propValue);
+    }
+    （4）调用这个Map config就能取到值了。
+config.get(key);
+4.细节
+    （1）对可能出现异常的地方进行处理
+    （2）解决中文乱码问题
+        在props.load(is);之前加
+BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+props.load(br);
+    （3）支持多继承
+        对于配置文件，可以用子配置来取代父配置的内容，在父配置中加上属性
+# which extends default settings
+config.ext /子配置.properties
+        当然，光配置还不行，需要对这个配置进行处理
+    /**
+     * 初始化配置属性
+     */
+    private void init() throws Exception {
+        // 读取默认配置文件
+        this.read("/config.properties");// read方法的内容就是3的内容。
+        // 扩展配置文件路径配置项名称
+        String ext = "config.ext";
+        // 支持多重继承，循环读取配置
+        while (this.isNotBlank(this.config.get(ext))) {
+            // 读取扩展配置文件路径
+            String path = this.config.get(ext);
+            // 清除配置属性中已读取的扩展配置文件路径
+            this.config.remove(ext);
+            // 读取扩展配置文件
+            this.read(path);
+        }
+    }
+private String isNotBlank(String str){
+    return !(str == null || "".equels(str.trim()));
+}
+    这样，在读取完父配置后，如果包含有config.ext属性，就会对包含的子配置进行读取，子配置可以配置父类中已经配置过的属性，这时，读取到的是子配置中的属性，而且，子配置中还可以再有子配置。
+    （4）文件路径问题
+        用InputStream读取
+        前面带有"/"表示当前工程
+            "/com/b/a.properties"    表示配置文件在当前工程的com.b包中；
+        前面不带"/"表示相对路径
+            "a.properties" 或"b/a.properties"    表示在读取配置文件的java类同一个包中或子包b中
+        用FileInputStream读取时，路径应该是计算机系统的路径。(D:/xxx/xx.properties)
+    （5）配置文件中key没有对应的value问题
+        如果配置文件中没有给key配置value，那么其value为""
+    （6）修改参数

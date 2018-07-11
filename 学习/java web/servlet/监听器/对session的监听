@@ -1,0 +1,29 @@
+主要使用接口：HttpSessionListener、HttpSessionAttributeListener和HttpSessionBindingListener接口
+1.session状态监听：HttpSessionListener接口
+    包：javax.sevlet.http.HttpSessionListener
+    方法：
+    public void sessionCreated(HttpSessionEvent se) session创建时调用
+    public void sessionDestroyed(HttpSessionEvent se) session销毁时调用
+    HttpSessionEvent事件
+    public HttpSession getSession()获取当前的session
+    注：当一个新用户打开一个动态页时，服务器会为新用户分配session，并且触发HttpSessionListener接口中的sessionCreated()事件；但是在用户销毁时却有两种不同的方式来触发sessionDestroyed()事件。方式一，调用HttpSession接口中的invalidate()方法，让一个session失效；方式二，超过了配置的session超时时间，session超时时间可以直接在项目的web.xml中配置。
+    <session-config>
+        <session-timeout>5<session-timeout>//设置超时时间为5分钟
+    </session-config>
+
+2. session属性监听：HttpSessionAttributeListener接口
+    包：javax.servlet.http.HttpSessionAttributeListener
+    方法：
+    public void attributeAdded(HttpSessionBindingEvent se) 增加属性时触发
+    public void attributeRemoved(HttpSessionBindingEvent se) 删除属性时触发
+    public void attributeReplaced(HttpSessionBindingEvent se) 替换属性时触发
+    HttpSessionBindingEvent事件
+    public HttpSession getSession() 取得session
+    public String getName() 取得属性的名称
+    public Object getValue() 取得属性的内容
+
+3.session属性监听：HttpSessionBindingListener接口
+    包：javax.servlet.http.HttpSessionBindingListener
+    方法：
+    public void valueBound(HttpSessionBindingEvent event) 绑定对象到session时触发
+    public void valueUnbound(HttpSessionBindingEvent event) 从session中移除对象时触发

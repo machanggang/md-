@@ -1,0 +1,44 @@
+JDBC连接各种数据库的方法（经典）
+1)连接Oracle 8/8i/9i/10g/11g（thin模式）
+Class.forName("oracle.JDBC.driver.OracleDriver").newInstance();
+String url="JDBC:oracle:thin:@localhost:1521:orcl"       //orcl为Oracle数据库的SID
+String user="test";
+String password="test";
+Connection con=DriverManager.getConnection(url,user,password);
+2)连接DB2数据库
+Class.forName("com.ibm.db2.jcc.DB2Driver");
+String url="JDBC:db2://localhost:5000/testDb";
+String user="test"; String password="test";
+Connection con=DriverManager.getConnection(url,user,password);
+3)连接MySQL数据库
+Class.forName("com.mysql.jdbc.Driver");
+String url="JDBC:mysql://localhost:8080/testDB";
+String user="test"; String password="test";
+Connection con=DriverManager.getConnection(url,user,password);
+4)连接SQL Server2000数据库
+Class.forName("com.microsoft.JDBC.sqlserver.SQLServerDriver");
+String url="JDBC:microsoft:sqlserver://localhost:1433;DatabaseName=testDb";
+String user="test"; String password="test";
+Connection con=DriverManager.getConnection(url,user,password);
+5)连接PostgreSQL数据库
+Class.forName("org.postgresql.Driver");
+String url="JDBC:postgresql://localhost/testDb";
+String user="test"; String password="test";
+Connection con=DriverManager.getConnection(url,user,password);
+6)连接Access数据库
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+String url="JDBC:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ="+application.getRealPath("/Data/testDb/mdb");
+Connection conn=DriverManager.getConnection(url,"","");
+7连接Sybase数据库
+Class.forName("com.sybase.JDBC.SybDriver");
+String url="JDBC:sybase:Tds:localhost:5007/testDb";
+Properties pro=System.getProperties();
+pro.put("user","userId");
+pro.put("password","user_password");
+Connection con=DriverManager.getConnection(url,pro);
+8连接informix数据库
+Class.forName("com.informix.JDBC.ifxDriver");
+String url="JDBC:informix-sqli:localhost:1533/testDb:INFORMIXSERVER=myserver"user=testUser;password=testpassword"; Connection con=DriverManager.getConnection(url);
+
+来源： <http://www.cnblogs.com/xiohao/p/3507483.html>
+ 

@@ -1,0 +1,2 @@
+语法：EXECUTE IMMEDIATE 'sql字符串'
+可以动态拼接好sql字符串后再执行

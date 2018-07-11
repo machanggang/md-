@@ -1,0 +1,76 @@
+1.SQL对大小写不敏感
+2.SELECT语句
+    a.语法
+        SELECT column_name(s) FROM table_name
+        SELECT * FROM table_name
+        column_name(s):列的名称，多个用逗号隔开。
+        table_name:表的名称
+        *:全部的列
+    b.作用
+        在表中选取列。
+
+3.SELECT DISTINCT
+    a.语法
+        SELECT DISTINCT column_name(s) FROM table_name
+    b.作用
+        在表中选取列，并且结果不包含重复的记录（若重复，则只选取第一条记录）。
+4.WHERE子句
+    a.语法
+        WHERE 表达式（列名称 运算符 值）
+        多个表达式用AND或OR链接， 表示且、或。
+    b.作用
+        用于规定选择的标准
+    c.运算符
+操作符	描述
+=	等于
+<>	不等于
+>	大于
+<	小于
+>=	大于等于
+<=	小于等于
+BETWEEN	在某个范围内
+LIKE	搜索某种模式
+
+    d.注
+        运算符不等于也用"!="；
+        当值不是数值时，需要用单引号或双引号环绕， 数值则不需要。
+5.ORDER BY
+    a.语法
+        ORDER BY 列名称 (ASC)，正序（升序）排列，ASC可以省略；
+        ORDER BY 列名称 DESC，逆序（降序）排列。
+        默认升序排列，多个列需要排序，用逗号隔开，按从左到右的顺序排列（即先满足左边的排序，有相同值时，再按下一个列来排序）。
+    b.作用
+        根据指定列对结果集进行排序。
+6.GROUP BY
+    a.语法
+        GROUP BY columnname    对columnname进行分组
+        GROUP BY ALL columnname1, columnname2,...    对多个列进行分组，当所有列的值都一样时会被分到同一个组。
+    b.作用
+        对指定的列进行分组。
+    c.注：在select指定的字段要么就要包含在Group By语句的后面，作为分组的依据；要么就要被包含在聚合函数中。
+
+
+
+7.INSERT INTO
+    a.语法
+        INSERT INTO 表名称 VALUES（值1，值2，。。。）
+        INSERT INTO table_name（列1，列2，。。。） VALUES（值1，值2，。。。）
+    b.作用
+        用于向指定表格插入新的行。
+    c.注
+        对于某些列没有指定值，则插入该列的值为空。
+8.UPDATE
+    a.语法
+        UPDATE table_name SET column_name1=value1,column_name2=value2,... WHERE condition
+    b.作用
+        用于修改（更新）表中的数据，没有更改的字段不会改变。
+9.DELECT
+    a.语法
+        DELECT FROM table_name WHERE condition，删除某行；
+        DELECT * FROM table_name/ DELECT FROM table_name，删除所有行，但不删除表。
+    b.作用
+        用于删除表中的行。
+
+10.注释
+    单行注释："--"
+    多行注释："/**/"

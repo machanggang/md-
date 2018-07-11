@@ -1,0 +1,8 @@
+1.简介
+    sql函数用于记数和计算。
+    语法：SELECT function(col) FROM table
+2.函数分类
+    a.Aggregate函数
+        合计函数，面向一系列的值，并返回一个单一的值。
+    b.Scalar函数
+        面向某个单一的值，并返回基于输入值的一个单一的值。

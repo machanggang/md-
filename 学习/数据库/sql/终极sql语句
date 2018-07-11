@@ -1,0 +1,20 @@
+1.单表select
+[select/delete/update…][from…][where…][group by…][having…][order by…]
+
+
+    SELECT column(s)
+    FROM table
+    WHERE condition
+    ORDER BY col
+    GROUP BY col
+    HAVING function(col)
+2.多表select
+    SELECT col(s)
+    FROM table1
+    JOIN table2
+    ON table1.filed1 compopr table2.filed2[AND ON... OR ON...]
+    WHERE condition
+    ORDER BY col
+    GROUP BY col
+    HAVING function(col)
+    蓝色部分（table2）可以再嵌套JOIN table3

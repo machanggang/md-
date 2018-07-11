@@ -1,0 +1,25 @@
+1.JDBC（java database connect）
+    java对数据库进行操作（增删改查）。
+    java程序发送sql语句到数据库，数据库执行之后将结果返回给java程序管理。
+2.示例
+    a.加载驱动
+        Class.forName("oracle.JDBC.driver.OracleDriver");
+        （当把它加载到内存时，在该类中有静态代码块，自动执行registerDriver(Driver driver)方法，把驱动加载至内存中。）
+    b.获取连接
+        Connection conn = DriverManager.getConnection(url, username, password);// 参数为你连接数据库的参数
+    c.有了连接就可以对数据库进行操作了
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.excuteQuery(sql);
+        得到的rs set集合就是查询到的数据了。当然，这是执行静态的sql语句，要执行动态sql语句，应该如下
+        PareparedStatement pstmt = conn.parepareStatement();
+        pstmt......// 暂时省略
+        注：在用PareparedStatement 时，如果要批量提交，先将自动提交关闭conn.setAutoCommit(false);
+    d.最后要记得关闭连接
+        // 关闭连接
+        if(conn != null){
+            conn.close();
+        }
+        // 同时关闭Statement、ResultSet、PareparedStatement
+        if（xx != null）{
+            xx.close();
+        }

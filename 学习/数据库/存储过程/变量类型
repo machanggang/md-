@@ -1,0 +1,48 @@
+集合定义及使用
+定义
+1.索引表（嵌套表）？
+2.变长数组
+
+游标
+普通游标
+cursor c_normal is select xx_column,... from xx_table where rownum = 1;
+特点：where语句是固定死的，不包含变量、参数等。
+参数游标
+zz_variable number(10):=1;
+cursor c_parameter is select xx_column,... from xx_table where yy_column = zz_variable;
+特点：where语句带有变量，可以根据变量来得到查询的结果集。但是变量必须要游标之前声明。
+游标变量
+cursor c_variable(zz_argument number) is select xx_column,... from xx_table where yy_column = zz_argument;
+特点：根据传入参数zz_argument 来查询。
+注意：以上的关键字只能使用is，不予as通用。
+引用游标类型
+type ref_type is ref cursor;--定义了引用游标类型
+c_ref ref_type;--声明游标变量，它的类型是ref_type
+open c_ref for select ... from ... where ...;--用open .. for 打开查询。可以使用多次，用来打开不同的查询。
+close c_ref;--关闭游标。
+
+使用游标
+%found %notfound属性
+使用loop循环
+loop --开始循环
+    fetch c_xx into v_yy,v_zz...; --读取游标c_xx，并将值（游标的列）设进一些变量(v_yy,v_zz,...)中。
+    exit when c_xx%notfound; --当%notfound时，退出循环。记住，要紧跟着fetch，避免多余的数据处理。
+    ...... --do something 要进行的操作。
+end loop;  --循环结束
+
+使用while循环
+fetch c_xx into v_yy,v_zz...; --先执行一次fetch语句，%found才会有值（%notfound也一样）。
+while c_xx%found loop
+    ...... --do something 要进行的操作。
+    fetch c_xx into v_yy,v_zz...; --
+end loop;
+
+使用for循环（☆☆☆☆☆ 高效，简洁，安全。五星推荐）
+for v_i in c_xx loop --for循环，v_i为循环变量，c_xx为需循环的游标。
+    v_yy:=v_i.yy; --将循环变量（v_i）的属性（yy）设置到变量（v_yy）中。下同
+    v_zz:=v_i.zz;
+    ...
+
+    ...... --do something 要进行的操作。
+end loop; --结束for循环。
+特点：不需要open和close。自动定义了一个记录类型v_i，无需声明和指定类型，使用即可。

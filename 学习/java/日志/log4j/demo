@@ -1,0 +1,11 @@
+1. 下载log4j的jar包。
+2. 将jar包放进项目中，log4j.properties配置文件放到src目录下。
+3. 在需要记录日志的类里，加上这句代码
+private Logger logger = Logger.getLogger(运行的类.class);// 普通使用
+// 或 private Logger logger = Logger.getLogger("运行的类名");
+// 或 private Logger logger = Logger.getLogger(getClass());
+// 或 private Logger logger = Logger.getLogger(getClass().getName());
+4. 在需要记录的地方，这样使用
+logger.info("message");
+logger.debug("message");
+logger.error("message");

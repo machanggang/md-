@@ -1,0 +1,20 @@
+JDBC注册驱动程序三种方式
+一、DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
+ jdbc是使用桥的模式进行连接的。DriverManager就是管理数据库驱动的一个类，java.sql.Driver就
+是一个提供注册数据库驱动的接口，而com.microsoft.sqlserver.jdbc.SQLServerDriver()是
+java.sql.Driver接口的一个具体实现。
+二、System.setProperty("jdbc.drivers", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+ 多个驱动使用冒号分隔开，在连接时JDBC会按顺序搜索，直到找到第一个能成功连接指定URL的驱动程序。
+三、Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+   第一种与第二种注册的方法看起来更加的直接与好理解。第三种方法是通过Class把类先装载到java的虚拟机中，并没有创建Driver类的实例。
+  第二种与第三种方法可以脱离jdbc的驱动进行编译，第一种方法不可以的，它一定要有jdbc的驱动才可以通过编译，这样对我们的程序就有很多的不好之处，为程序换数据库会带来麻烦。
+
+我们通过Driver类的源码可以了解到，Driver类中就有一个静态的代码块，只要我们执行了Driver类中的静态代码块，并把驱动的实例放入到
+Drivers的一个数组列表中，我们再调用方法registerDrever就相当于又向drivers列表中放了一次driver驱动，虽然这并不影
+响我们程序，但是这样做实在是没有必要，还会影响程序的运行。
+所以推荐使用第三种方法来注册驱动。
+ 第三中的好处在于能够在编译时不依赖于特定的JDBC Driver库，也就是减少了项目代码的依赖性，而且也很容易改造成从配置文件读取JDBC配置，从而可以在运行时动态更换数据库连接驱动。
+
+来源： <http://blog.sina.com.cn/s/blog_670c5a4001017e2e.html>
+ 

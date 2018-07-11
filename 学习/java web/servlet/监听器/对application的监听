@@ -1,0 +1,19 @@
+对application的监听，实际上就是对ServletContext监听，主要使用ServletContextListener和ServletContextAttributeListener两个接口
+1.上下文状态监听：ServletContextListener接口
+    所属包：javax.servlet.ServletContextListener
+    接口定义的方法：
+    public void contextInitialized(ServletContextEvent sce) 容器（Servlet上下文）启动时触发
+    public void contextDestroyed(ServletContextEvent sce) 容器销毁时触发
+    其中，ServletContextEvent接口定义有一个方法:
+    public ServletContext getServletContext()
+    该方法用于获取一个ServletContext对象的实例。
+    当监听到的事件发生时，可以通过sce事件来获取ServletContext，然后对ServletContext进行操作。
+2.上下文属性的监听：ServletContextAttributeListener接口
+    包：javax.servlet.ServletContextAttributeListener
+    方法：
+    public void attributeAdded(ServletContextAttributeEvent scab)增加属性时触发
+    public void attributeRemoved(ServletContextAttributeEvent scab)删除属性时触发
+    public void attributeReplaced(ServletContextAttributeEvent scab)替换属性（重复设置）时触发
+    ServletContextAttributeEvent中定义的方法
+    public String getName()取得设置的属性名称
+    public Object getValue()取得设置的属性内容

@@ -1,0 +1,19 @@
+使用：
+序列名称.NEXTVAL    --下一个序列
+序列名称.CURRVAL    --当前序列
+
+在sql语句中，可以使用序列的地方：
+1.不包含子查询、snapshot、VIEW的 SELECT 语句；
+SELECT 序列名称.NEXTVAL FROM DUAL
+
+2.INSERT语句的子查询中
+INSERT INTO TABLE_NAME(ID, FIELD1, FIELD2, ...)
+SELECT 序列名称.NEXTVAL, VALUE1, VALUE2, ... FROM OTHER_TABLE
+
+3.INSERT语句的values中
+INSERT INTO TABLE_NAME(ID, FIELD1, FIELD2, ...)
+VALUES(序列名称.NEXTVAL, VALUE1, VALUE2, ...)
+
+4.UPDATE 的 SET中
+UPDATE TABLE_NAME SET ID = 序列名称.NEXTVAL, SET ...
+WHERE ...
